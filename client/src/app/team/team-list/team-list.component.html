@@ -1,0 +1,20 @@
+<div class="row m-2">
+  <div class="col-md-3 col-sm-12">
+    <div class="card" *ngIf="!addTeamVisible">
+      <div class="card-body">
+        <h5 class="card-title">Nuova</h5>
+        <button class="btn btn-success" (click)="addNewTeam()"><i class="fa fa-plus"></i></button>
+      </div>
+    </div>
+    <app-new-team 
+      *ngIf="addTeamVisible"
+      [leagueId]="leagueId"
+      (teamAdded)="onTeamAdded()"
+      ></app-new-team>
+  </div>
+  <div class="col-md-3 col-sm-12" *ngFor="let team of teamList">
+    <app-team-detail
+      [team]="team"
+    ></app-team-detail>
+  </div>
+</div>

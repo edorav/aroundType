@@ -1,0 +1,11 @@
+<form [formGroup]="newTeamForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <label>{{'name'|translate}}</label>
+    <input type="text" class="form-control" placeholder="{{'name'|translate}}" formControlName="name">
+  </div> 
+
+  <button type="submit" class="btn btn-primary">{{'save'|translate}}</button>
+  <button class="btn btn-default">{{'undo'|translate}}</button>
+
+</form>

@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="d-flex justify-content-between" *ngIf="league">
+    <div>{{league.name}}</div>
+    <div>
+      <button class="btn btn-primary">Avvia lega</button>
+    </div>
+  </div>
+  <ngb-tabset>
+    <ngb-tab>
+      <ng-template ngbTabTitle>Squadre</ng-template>
+      <ng-template ngbTabContent>
+        <app-team-list 
+          *ngIf="leagueId"
+          [leagueId]="leagueId"
+        ></app-team-list>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab>
+      <ng-template ngbTabTitle>Classifica</ng-template>
+      <ng-template ngbTabContent>
+        Class
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab>
+      <ng-template ngbTabTitle>Risultati</ng-template>
+      <ng-template ngbTabContent>
+        Res
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab>
+      <ng-template ngbTabTitle>Calendario</ng-template>
+      <ng-template ngbTabContent>
+        <app-new-calendar></app-new-calendar>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>

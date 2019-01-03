@@ -1,0 +1,6 @@
+<div class="container-fluid">
+  <button class="btn btn-primary" [routerLink]="[ '/league/new']"><i class="fa fa-plus"></i>Nuova </button>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let league of leagues"><a [routerLink]="[ '/league/detail/' + league.id ]">{{league.name}}</a></li>
+  </ul>
+</div>

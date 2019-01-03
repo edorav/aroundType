@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg navbar-dark mb-3 bg-primary">
+    <a class="navbar-brand" [routerLink]="[ '/' ]">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        <div ngbDropdown placement="bottom-right" class="d-inline-block" *ngIf="isLoggedIn">
+          <a ngbDropdownToggle><i class="fa fa-user"></i></a>
+          <div ngbDropdownMenu>
+            <button class="dropdown-item" [routerLink]="[ '/user/profile' ]">{{'myProfile'|translate}}</button>
+            <button class="dropdown-item" (click)="logout()">{{'logout'|translate}}</button>
+          </div>
+        </div>
+    </div>
+</nav>

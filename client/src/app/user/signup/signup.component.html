@@ -1,0 +1,26 @@
+<div class="container">
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>{{'firstName'|translate}}</label>
+      <input type="text" class="form-control" placeholder="{{'firstName'|translate}}" formControlName="firstName">
+    </div>
+
+    <div class="form-group">
+      <label>{{'lastName'|translate}}</label>
+      <input type="text" class="form-control" placeholder="{{'lastName'|translate}}" formControlName="lastName">
+    </div>
+
+    <div class="form-group">
+      <label>{{'email'|translate}}</label>
+      <input type="text" class="form-control" placeholder="{{'email'|translate}}" formControlName="email">
+    </div> 
+
+    <div class="form-group">
+      <label>{{'password'|translate}}</label>
+      <input type="password" class="form-control" placeholder="{{'password'|translate}}" formControlName="password">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+  </form>
+</div>
