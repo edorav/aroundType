@@ -30,7 +30,7 @@ import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import { Upload } from './upload/upload.entity';
 
-const config = dotenv.parse(fs.readFileSync(".env"));
+const config = dotenv.parse(fs.readFileSync('.env'));
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -43,32 +43,30 @@ const config = dotenv.parse(fs.readFileSync(".env"));
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secretOrPrivateKey: config['SECRET_KEY'],
+      secretOrPrivateKey: config.SECRET_KEY,
       signOptions: {
         expiresIn: 3600,
       },
     }),
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: config['host'],
-      port: parseInt(process.env.port) || 3306,
-      username: config['username'],
-      password: config['password'],
-      database: config['database'],
+      type: 'postgres',
+      host: config.host,
+      port: parseInt(config.port) || 3306,
+      username: config.username,
+      password: config.password,
+      database: config.database,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
+      logging: true,
     }),
     MulterModule.register({
-      //dest: __dirname + '/public/upload',
       storage: diskStorage({
         destination: __dirname + '/public/uploads'
         , filename: (req, file, cb) => {
-          // Generating a 32 random chars long string
-          const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
-          //Calling the callback passing the random name generated with the original extension name
-          cb(null, `${randomName}${extname(file.originalname)}`)
-        }
-      })
+          const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
+          cb(null, `${randomName}${extname(file.originalname)}`);
+        },
+      }),
     }),
   ],
   controllers: [
