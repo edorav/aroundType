@@ -37,6 +37,9 @@ export class User {
     @Column()
     age: number;
 
+    @Column()
+    phone: string;
+
     @CreateDateColumn()
     createdAt: string;
 

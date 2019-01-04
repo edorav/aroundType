@@ -1,5 +1,5 @@
 import { User } from './../user/user.entity';
-import * as faker from 'faker';
+import * as faker from 'faker/locale/it';
 
 export class UserFactory {
     static newBean() {
@@ -9,6 +9,7 @@ export class UserFactory {
         user.email = faker.internet.email();
         user.password = 'secret';
         user.age = 30;
+        user.phone = faker.phone.phoneNumber();
         return user;
     }
 }

@@ -11,7 +11,7 @@ import {
     JoinTable,
 } from 'typeorm';
 import { User } from './../user/user.entity';
-import { Upload } from 'src/upload/upload.entity';
+import { Upload } from './../upload/upload.entity';
 
 @Entity()
 export class Bean {
@@ -42,6 +42,9 @@ export class Bean {
 
     @VersionColumn()
     version: number;
+
+    @Column()
+    thumbnail: string;
 
     @ManyToOne(type => User, user => user.id, { nullable : false})
     @JoinColumn()

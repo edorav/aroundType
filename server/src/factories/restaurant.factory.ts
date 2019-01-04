@@ -1,8 +1,8 @@
-import * as faker from 'faker';
+import * as faker from 'faker/locale/it';
 import { Restaurant } from './../restaurant/restaurant.entity';
 
 export class RestaurantFactory{
-    static newBean(){
+    static newBean(){    
         let bean = new Restaurant();
         bean.name = faker.company.companyName();
         bean.latitude = parseFloat(faker.address.latitude());

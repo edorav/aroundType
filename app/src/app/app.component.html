@@ -1,10 +1,10 @@
 <ion-app>
   <ion-split-pane>
     <ion-menu>
-      <ion-content color="primary">
+      <ion-content>
         <ion-list lines="none">
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item color="primary" [routerDirection]="'root'" [routerLink]="[p.url]">
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
               <ion-icon slot="start" color="light" [name]="p.icon"></ion-icon>
               <ion-label>
                 {{p.title}}

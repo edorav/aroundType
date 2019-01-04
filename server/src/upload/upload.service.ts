@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, getManager } from 'typeorm';
 import { Upload } from './upload.entity';
-import { User } from 'src/user/user.entity';
+import { User } from './../user/user.entity';
 
 @Injectable()
 export class UploadService {

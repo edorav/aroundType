@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards, Req } from '@nestjs/common';
+import { Controller, Post } from '@nestjs/common';
 import { UserService } from './../user/user.service';
 import { UserFactory } from './../factories/user.factory';
 import { ShopService } from './../shop/shop.service';
@@ -9,6 +9,8 @@ import { MechanicService } from './../mechanic/mechanic.service';
 import { HotelFactory } from './../factories/hotel.factory';
 import { RestaurantFactory } from './../factories/restaurant.factory';
 import { MechanicFactory } from './../factories/mechanic.factory';
+import { BrandService } from './../brand/brand.service';
+import { BrandFactory } from './../factories/brand.factory';
 
 @Controller('private/seed')
 export class SeedController {
@@ -18,6 +20,7 @@ export class SeedController {
         private readonly _hotelService: HotelService,
         private readonly _restaurantService: RestaurantService,
         private readonly _mechanicService: MechanicService,
+        private readonly _brandService: BrandService,
     ) {}
 
     @Post()
@@ -28,7 +31,7 @@ export class SeedController {
 
         const users = [];
 
-        for(let i=0; i< records ; i++){            
+        for(let i=0; i< records ; i++){    
             try{
                 users.push(await this._userService.create(UserFactory.newBean()));
             } catch( exc ){
@@ -42,6 +45,7 @@ export class SeedController {
                 await this._hotelService.create(HotelFactory.newBean(), users[Math.floor(Math.random() * records)]);
                 await this._restaurantService.create(RestaurantFactory.newBean(), users[Math.floor(Math.random() * records)]);
                 await this._mechanicService.create(MechanicFactory.newBean(), users[Math.floor(Math.random() * records)]);
+                await this._brandService.create(BrandFactory.newBean());
             } catch( exc ){
                 status = 'fail';
             }

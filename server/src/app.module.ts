@@ -26,9 +26,11 @@ import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { UploadController } from './upload/upload.controller';
 import { UploadService } from './upload/upload.service';
+import { Upload } from './upload/upload.entity';
+import { BrandService } from './brand/brand.service';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
-import { Upload } from './upload/upload.entity';
+import { Brand } from './brand/brand.entity';
 
 const config = dotenv.parse(fs.readFileSync('.env'));
 @Module({
@@ -40,6 +42,7 @@ const config = dotenv.parse(fs.readFileSync('.env'));
       Mechanic,
       Restaurant,
       Upload,
+      Brand,
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
@@ -49,7 +52,7 @@ const config = dotenv.parse(fs.readFileSync('.env'));
       },
     }),
     TypeOrmModule.forRoot({
-      type: 'postgres',
+      type: 'mysql',
       host: config.host,
       port: parseInt(config.port) || 3306,
       username: config.username,
@@ -88,6 +91,7 @@ const config = dotenv.parse(fs.readFileSync('.env'));
     ShopService,
     RestaurantService,
     UploadService,
+    BrandService,
   ],
 })
 export class AppModule {

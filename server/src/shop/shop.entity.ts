@@ -1,8 +1,11 @@
 import {
     Entity,
     Column,
+    ManyToMany,
+    JoinTable,
 } from 'typeorm';
 import { Bean } from './../bean/bean.model';
+import { Brand } from './../brand/brand.entity';
 
 @Entity()
 export class Shop extends Bean {
@@ -12,4 +15,8 @@ export class Shop extends Bean {
         nullable: false,
     })
     name: string;
+
+    @ManyToMany(type => Brand, brand => brand.id)
+    @JoinTable()
+    brand: Brand[];
 }

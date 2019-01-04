@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+import * as faker from 'faker/locale/it';
 import { Shop } from "./../shop/shop.entity";
 
 export class ShopFactory{

@@ -27,30 +27,23 @@ export class ShopService {
         return await this.beanRepository.save(bean);       
     }
 
-    async get(): Promise<Shop[]> {
-  /*      SELECT 
-id, 
-(
-   3959 *
-   acos(cos(radians(37)) * 
-   cos(radians(lat)) * 
-   cos(radians(lng) - 
-   radians(-122)) + 
-   sin(radians(37)) * 
-   sin(radians(lat )))
-) AS distance 
-FROM markers 
-HAVING distance < 25 
-ORDER BY distance LIMIT 0, 20;
-*/
+    async get(latitude, longitude, distance): Promise<Shop[]> {
         return await this.beanRepository
             .createQueryBuilder("bean")
             .addSelect(
-                "3959 *"+
-                "acos(cos(radians(37)) * " + 
-                "1"+ // remove
+                "(6371 *"+
+                "acos(cos(radians("+ latitude +")) * " +
+                "cos(radians(latitude)) * " +
+                "cos(radians(longitude) - " +
+                "radians("+ longitude +")) +  " +
+                "sin(radians("+ latitude +")) *  " +
+                "sin(radians(latitude)))  " +
                 ")", "bean_distance")
-            .having("bean_distance < 2222225")
+            .having("bean_distance < :distance", { distance: distance })
+            .orderBy('bean_distance')
+            .take(10)
+            .skip(0)
+            //.loadRelationIdAndMap('upload','upload')
             .getRawMany();
 
         return await this.beanRepository.find({

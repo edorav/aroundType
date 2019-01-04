@@ -1,0 +1,21 @@
+<ion-toolbar *ngIf="isSearching == false">
+  <ion-buttons slot="start">
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+  <ion-title>
+    Shops
+  </ion-title>
+  <ion-buttons slot="end">
+    <ion-button (click)="isSearching = true">
+      <ion-icon slot="icon-only" name="search"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+<ion-toolbar *ngIf="isSearching == true">
+  <ion-buttons slot="start">
+    <ion-button (click)="isSearching = false">
+      <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-searchbar></ion-searchbar>
+</ion-toolbar>
