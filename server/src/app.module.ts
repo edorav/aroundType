@@ -31,6 +31,9 @@ import { BrandService } from './brand/brand.service';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import { Brand } from './brand/brand.entity';
+import { MailerModule } from '@nest-modules/mailer';
+import { StatusMonitorModule } from 'nest-status-monitor';
+import { statusMonitorConfig } from './statusMonitorConfig';
 
 const config = dotenv.parse(fs.readFileSync('.env'));
 @Module({
@@ -51,13 +54,23 @@ const config = dotenv.parse(fs.readFileSync('.env'));
         expiresIn: 3600,
       },
     }),
+    MailerModule.forRoot({
+      transport: `smtps://${config.SMTP_USER}:${config.SMTP_PASS}@${config.SMTP_DOMAIN}`,
+      defaults: {
+        from: config.EMAIL_FROM,
+      },
+      templateDir: './src/common/email-templates',
+      templateOptions: {
+        engine: 'handlebars',
+      },
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: config.host,
-      port: parseInt(config.port) || 3306,
-      username: config.username,
-      password: config.password,
-      database: config.database,
+      host: config.DB_HOST,
+      port: parseInt(config.DB_PORT, 1),
+      username: config.DB_USERNAME,
+      password: config.DB_PASSWORD,
+      database: config.DB_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       logging: true,
@@ -71,6 +84,7 @@ const config = dotenv.parse(fs.readFileSync('.env'));
         },
       }),
     }),
+    StatusMonitorModule.setUp(statusMonitorConfig),
   ],
   controllers: [
     AppController,

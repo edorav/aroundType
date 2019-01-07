@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nest-modules/mailer": "^0.4.1",
     "@nestjs/common": "^5.4.0",
     "@nestjs/core": "^5.4.0",
     "@nestjs/jwt": "^0.2.1",
@@ -32,6 +33,7 @@
     "dotenv": "^6.2.0",
     "faker": "^4.1.0",
     "mysql": "^2.16.0",
+    "nest-status-monitor": "0.0.2",
     "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1",
     "passport-jwt": "^4.0.0",

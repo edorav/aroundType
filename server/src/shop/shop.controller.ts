@@ -6,6 +6,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { Shop } from './shop.entity';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
+import { MailerProvider } from '@nest-modules/mailer';
 const config = dotenv.parse(fs.readFileSync('.env'));
 
 @Controller('shop')
@@ -14,8 +15,9 @@ export class ShopController {
         private readonly _shopService: ShopService,
         private readonly _userService: UserService,
         private readonly _uploadService: UploadService,
-    ) {}
-    
+        private readonly mailerProvider: MailerProvider,
+    ) { }
+
     @Post('upload')
     @UseGuards(AuthGuard())
     @UseInterceptors(FileInterceptor('file'))
@@ -23,7 +25,7 @@ export class ShopController {
         const bean = await this._shopService.findOne(req.body.id);
         const user = await this._userService.findOneByEmail(req.user);
 
-        if(req.body.thumbnail){
+        if (req.body.thumbnail) {
             bean.thumbnail = file.filename;
         } else {
             const upload = await this._uploadService.create(file, user);
@@ -34,8 +36,8 @@ export class ShopController {
 
     @Get(':lat/:lng/:distance')
     async get(@Param('lat') lat, @Param('lng') lng, @Param('distance') distance): Promise<Shop[]> {
-/*        SELECT * FROM tweets WHERE location <@ circle '((-34.603722, -58.381592), 2000)'
-*/
+        /*        SELECT * FROM tweets WHERE location <@ circle '((-34.603722, -58.381592), 2000)'
+        */
         return this._shopService.get(lat, lng, distance);
     }
 
@@ -47,6 +49,20 @@ export class ShopController {
     @Get('image/:thumbnail')
     getThumbnail(@Param('thumbnail') beanThumbnail, @Res() res) {
         const imgPath = '/uploads/' + beanThumbnail;
-        return res.sendFile(imgPath, { root: config.PRODUCTION === 'true' ? 'public' : 'src/public' });
+        return res.sendFile(imgPath, { root: 'src/public' });
+    }
+
+    @Get('testmail/test')
+    sendMail() {
+        this.mailerProvider.sendMail({
+            to: 'test@nestjs.com',
+            from: 'noreply@nestjs.com',
+            subject: 'Testing Nest Mailermodule with template ✔',
+            template: 'welcome', // The `.pug` or `.hbs` extension is appended automatically.
+            context: {  // Data to be sent to template engine.
+              username: 'john doe',
+              code: 'cf1a3f828287',
+            },
+        });
     }
 }

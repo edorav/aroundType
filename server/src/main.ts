@@ -10,7 +10,7 @@ async function bootstrap() {
   app.enableCors();
 
   app.useStaticAssets(path.join(__dirname, '/public/upload'));
-  
+
   await app.listen(3000);
 }
 bootstrap();
