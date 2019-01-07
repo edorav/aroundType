@@ -6,14 +6,14 @@ import { UserService } from './user.service';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 
-const config = dotenv.parse(fs.readFileSync(".env"));
+const config = dotenv.parse(fs.readFileSync('.env'));
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly userService: UserService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: config['SECRET_KEY'],
+      secretOrKey: config.SECRET_KEY,
     });
   }
 
