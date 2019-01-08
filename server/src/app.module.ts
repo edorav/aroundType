@@ -28,12 +28,15 @@ import { UploadController } from './upload/upload.controller';
 import { UploadService } from './upload/upload.service';
 import { Upload } from './upload/upload.entity';
 import { BrandService } from './brand/brand.service';
-import * as dotenv from 'dotenv';
-import * as fs from 'fs';
 import { Brand } from './brand/brand.entity';
 import { MailerModule } from '@nest-modules/mailer';
 import { StatusMonitorModule } from 'nest-status-monitor';
 import { statusMonitorConfig } from './statusMonitorConfig';
+import { MessageController } from './message/message.controller';
+import { MessageService } from './message/message.service';
+import * as dotenv from 'dotenv';
+import * as fs from 'fs';
+import { Message } from './message/message.entity';
 
 const config = dotenv.parse(fs.readFileSync('.env'));
 @Module({
@@ -46,6 +49,7 @@ const config = dotenv.parse(fs.readFileSync('.env'));
       Restaurant,
       Upload,
       Brand,
+      Message,
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
@@ -95,6 +99,7 @@ const config = dotenv.parse(fs.readFileSync('.env'));
     RestaurantController,
     SeedController,
     UploadController,
+    MessageController,
   ],
   providers: [
     AppService,
@@ -106,6 +111,7 @@ const config = dotenv.parse(fs.readFileSync('.env'));
     RestaurantService,
     UploadService,
     BrandService,
+    MessageService,
   ],
 })
 export class AppModule {

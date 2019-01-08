@@ -23,33 +23,26 @@ export class ShopService {
         return await this.beanRepository.findOne(id, { relations: ['upload'] });
     }
 
-    async save(bean: Shop): Promise<Shop>{
-        return await this.beanRepository.save(bean);       
+    async save(bean: Shop): Promise<Shop> {
+        return await this.beanRepository.save(bean);
     }
 
     async get(latitude, longitude, distance): Promise<Shop[]> {
         return await this.beanRepository
-            .createQueryBuilder("bean")
+            .createQueryBuilder('bean')
             .addSelect(
-                "(6371 *"+
-                "acos(cos(radians("+ latitude +")) * " +
-                "cos(radians(latitude)) * " +
-                "cos(radians(longitude) - " +
-                "radians("+ longitude +")) +  " +
-                "sin(radians("+ latitude +")) *  " +
-                "sin(radians(latitude)))  " +
-                ")", "bean_distance")
-            .having("bean_distance < :distance", { distance: distance })
+                '(6371 *' +
+                'acos(cos(radians(' + latitude + ')) * ' +
+                'cos(radians(latitude)) * ' +
+                'cos(radians(longitude) - ' +
+                'radians(' + longitude + ')) +  ' +
+                'sin(radians(' + latitude + ')) *  ' +
+                'sin(radians(latitude)))  ' +
+                ')', 'bean_distance')
+            .having('bean_distance < :distance', { distance: distance })
             .orderBy('bean_distance')
             .take(10)
             .skip(0)
-            //.loadRelationIdAndMap('upload','upload')
             .getRawMany();
-
-        return await this.beanRepository.find({
-            skip: 0,
-            take: 50,
-            relations: ['upload'] 
-        });
     }
 }
